@@ -1,7 +1,7 @@
 <%
    from crawl_utils import XXX_TOURNEY_BASE
    from test_data import USE_TEST
-   version = '0.12'
+   version = '0.13'
    year    = '2013'
    title   = "Crawl %s Tournament Information" % version
  %>
@@ -21,8 +21,8 @@
         <div class="heading">
           <h1>${title}</h1>
           <p class="fineprint">
-            Tournament starts on <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20130511T00">May 11, ${year} at 0:00 UTC (midnight May 11)</a>, and ends on
-            <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20130527T00">May 26, ${year} at 24:00 UTC (midnight May 27)</a>.
+            Tournament starts on <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20131011T20">Oct 11, ${year} at 20:00 UTC</a>, and ends on
+            <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20131027T20">Oct 27, ${year} at 20:00 UTC</a>.
           </p>
         </div>
         <hr>
@@ -31,14 +31,22 @@
           <p>
             Hello all! Welcome to the rules for the
             ${version} Dungeon Crawl Stone Soup Tournament. The simple part:
-            Play on one of the <b>three</b> public servers (<a href="http://crawl.akrasiac.org">crawl.akrasiac.org</a>,
+            Play on one of the <b>five</b> public servers (<a href="http://crawl.akrasiac.org">crawl.akrasiac.org</a>,
             <a href="http://crawl.develz.org">crawl.develz.org</a>,
-            or <a href="http://crawl.s-z.org">crawl.s-z.org</a>)
+            <a href="http://crawl.lantea.net:8080">crawl.lantea.net</a>,
+            <a href="http://crawl.s-z.org">crawl.s-z.org</a>,
+            or <a href="http://rl.heh.fi:8080">rl.heh.fi</a>)
             and all of
-            your Crawl ${version} games that <b>start after <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20130511T00">0:00 UTC on
-            May 11 (midnight May 11)</a></b> and <b>end before <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20130527T00">24:00 UTC on May 26 (midnight May 27)</a></b> will
+            your Crawl ${version} games that <b>start after <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20131011T20">20:00 UTC on
+            Oct 11</a></b> and <b>end before <a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20131027T20">20:00 UTC on Oct 27</a></b> will
             count toward the tournament.
           </p>
+
+          <div class="inset">
+            <p>
+              <span class="inline_heading">Note:</span> One of the servers, RHF, does not currently have 0.13 set up. Until it gets 0.13, you will be unable to use this server for tourney purposes; please use one of the other four servers instead.
+            </p>
+          </div>
 
           <p>
             For players who participated in previous
@@ -86,10 +94,10 @@
 
           <div class="inset">
             <p>
-              <span class="inline_heading">Note:</span> clan membership lines can be added to your ${version} rcfile on <b>any</b> of the three public servers.
+              <span class="inline_heading">Note:</span> clan membership lines can be added to your ${version} rcfile on <b>any</b> of the public servers.
               If you add clan
               membership lines to more than one rcfile, then the rcfile on
-              the server earliest in the list CSZO, CAO, CDO will take
+              the server earliest in the list CSZO, CAO, CDO, CLN, RHF will take
               precedence.
             </p>
           </div>
@@ -101,13 +109,13 @@
             the captain's rcfile and the captain's username is in the
             player's rcfile and the tourney scripts notice this, the
             players will be in the same clan. The tourney scripts only check for
-            updates to CAO or CDO rcfiles once every four hours, so if
+            updates to non-CSZO rcfiles once every four hours, so if
             you are impatient about this then you should edit your CSZO rcfile instead.
           </p>
 
           <p>
             Clans may be changed by adding or removing players at any
-            time until <b><a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20130518T23">23:00 UTC on May 18</a></b>, after which clans will be
+            time until <b><a href="http://www.timeanddate.com/worldclock/fixedtime.html?iso=20131019T19">19:00 UTC on Oct 19</a></b>, after which clans will be
             effectively frozen.
           </p>
 
@@ -122,17 +130,17 @@
 
             <p>
               <span>50 points</span> for a player winning two characters of
-              different races and classes at some point during the tourney.
+              different species and backgrounds at some point during the tourney.
             </p>
 
             <p>
               <span>60 extra points</span> for each consecutive (streak) win
-              by a player with a race that has not 
+              by a player with a species that has not 
 	      previously been a streak win for that player.
             </p>
             <p>
               <span>30 extra points</span> for each consecutive (streak) win
-              by a player with a class that has not 
+              by a player with a background that has not 
 	      previously been a streak win for that player.
             </p>
 
@@ -156,31 +164,31 @@
           <hr>
 
           <div>
-            <h2>RACE/CLASS/GOD WINS</h2>
+            <h2>SPECIES/BACKGROUND/GOD WINS</h2>
             <p>
-              <span>2*(48+T)/(2+R) points</span> (rounded up) for a win with a given race if T is the total number of games won in the tournament before the start of the win in question and R of those T were with the given race. If a player wins the same race multiple times, she only gets the largest value of this bonus among the wins, not the sum.
+              <span>2*(48+T)/(2+S) points</span> (rounded up) for a win with a given species if T is the total number of games won in the tournament before the start of the win in question and S of those T were with the given species. If a player wins the same species multiple times, she only gets the largest value of this bonus among the wins, not the sum.
 
-              For example, if there have been 10 games won prior to the start of the win in question and 2 of them were with the same race, then the
+              For example, if there have been 10 games won prior to the start of the win in question and 2 of them were with the same species, then the
               win will be worth 2*(48+10)/(2+2) = 29 additional points.
             </p>
             <p>
-              <span>(54+T)/(2+C) points</span> (rounded up) for a win with a given class if T is the total number of games won in the tournament before the start of the win in question and C of those T were with the given class. If a player wins the same class multiple times, she only gets the largest value of this bonus, not the sum.
+              <span>(52+T)/(2+B) points</span> (rounded up) for a win with a given background if T is the total number of games won in the tournament before the start of the win in question and B of those T were with the given background. If a player wins the same background multiple times, she only gets the largest value of this bonus, not the sum.
             </p>
             <p>
               <span>1.5*(38+T)/(2+G) points</span> (rounded up) for a win with a given god if T is the total number of games won in the tournament before the start of the win in question and G of those T were with the given god. If a player wins with the same god multiple times, she only gets the largest value of this bonus, not the sum. For purposes of these points we say that a player wins with a god if she reaches full (******) piety with that god without worshipping any other god first. For Xom, you must play a Chaos Knight and never abandon Xom. For "No God", you must never worship a god.
             </p>
             <div class="inset">
               <p>
-	        For clan scoring, if a clan has multiple wins for the same race,
-                class, or god, only the largest value of the bonus among the
+	        For clan scoring, if a clan has multiple wins for the same species,
+                background, or god, only the largest value of the bonus among the
                 wins is used, not the sum.
 	      </p>
             </div>
             <div class="inset">
               <p>
-	        The current values of the bonus for each race, class, or god
+	        The current values of the bonus for each species, background, or god
                 will be
-                listed on the "Species/Classes/Gods" page for your convenience.
+                listed on the "Species/Backgrounds/Gods" page for your convenience.
 	      </p>
             </div>
           </div>
@@ -194,8 +202,8 @@
             <p><span>200-100-50 points</span> for first 15-rune victory.</p>
             <p><span>200-100-50 points</span> for longest streak of
               winning games, where "length" of 
-	      a streak is defined as min(number of distinct races used, number 
-	      of distinct classes used).
+	      a streak is defined as min(number of distinct species used, number 
+	      of distinct backgrounds used).
               Ties are broken by the first to achieve the streak.
             </p>
             <p>
@@ -207,7 +215,19 @@
 	      Temple, Lair, Orc, or the Vaults (<a href="#lord_of_darkness">LORD OF DARKNESS</a> banner III).
 	    </p>
             <p>
-              <span>75 bonus points</span> for winning <a href="#nemelex_choice">NEMELEX' CHOICE</a> characters. The first Nemelex' Choice combo is chosen at the start of the tournament, and after that each one is chosen when the previous one is won for the first time. Each combo remains valid until it has been won five times. The race/class combinations are chosen by Nemelex from those with fewer than six online wins.
+              <span>75 bonus points</span> for winning <a href="#nemelex_choice">NEMELEX' CHOICE</a> characters. The first Nemelex' Choice combo is chosen at the start of the tournament, and after that each one is chosen when the previous one is won for the first time. Each combo remains valid until it has been won five times. The species/background combinations are chosen by Nemelex from those with fewer than eight online wins.
+            </p>
+          </div>
+
+          <hr>
+
+          <div>
+            <h2>SPECIAL ACHIEVEMENTS</h2>
+
+            <p><span>25 points</span> for each game in which you enter Tomb for the first time after picking up the Orb of Zot and then get the golden rune (<a href="#natures_ally">NATURE's ALLY</a> banner III).
+            </p>
+
+            <p><span>25 points</span> for each game in which you get four runes before entering D:14 (or below) in that game (<a href="#vow_of_courage">VOW OF COURAGE</a> banner III).
             </p>
           </div>
 
@@ -229,18 +249,18 @@
             <p><span>score/120,000 points</span> for each player's highest scoring winning game.</p>
 
             <p>
-              <span>5 points</span> per high score in a race/class combination
+              <span>5 points</span> per high score in a species/background combination
               (HuWn, not just Hu).
             </p>
 
             <p>
               <span>5 additional points</span> for each high score in a
-              race/class combination that is attained by a win.
+              species/background combination that is attained by a win.
             </p>
 
-            <p><span>20 points</span> per high score in a race.</p>
+            <p><span>20 points</span> per high score in a species.</p>
 
-            <p><span>10 points</span> per high score in a class.</p>
+            <p><span>10 points</span> per high score in a background.</p>
 
           </div>
 
@@ -330,12 +350,12 @@
 
             <p>
               <span>200-100-50 clan points</span> for the players with the most high 
-	      scores in race/class combinations.
+	      scores in species/background combinations.
             </p>
 
             <p>
               <span>200-100-50 clan points</span> for the <b>clans</b> with the most
-              high scores in race/class combos.
+              high scores in species/background combos.
             </p>
 
             <p>
@@ -352,7 +372,7 @@
 
             <p>
               Sum total of all individual points with the exception of
-              "Race/Class/God wins" points (for which only the largest value of the bonus among the clan's wins is used, as described in that section), plus the
+              "Species/Background/God wins" points (for which only the largest value of the bonus among the clan's wins is used, as described in that section), plus the
 	      "Clan points only" awards above.
             </p>
 
@@ -407,7 +427,7 @@
               <br>
                 I: Have the highest score in your clan.
               <br>
-                II: Have the highest score in a clan that is ranked in the top 20.
+                II: Have the highest score in a clan that is ranked in the top 27.
               <br>
                 III: Have the highest score in a clan that is ranked in the top 5.
               </p>
@@ -431,7 +451,7 @@
               <br>
                 II: Achieve a two-win streak.
               <br>
-                III: Achieve a four-win streak with four distinct races and four distinct classes.
+                III: Achieve a four-win streak with four distinct species and four distinct backgrounds.
               </p>
             </div>
 
@@ -473,7 +493,7 @@
               <br>
                 II: Get the golden rune.
               <br>
-                III: Enter Tomb for the first time after picking up the Orb of Zot, and then get the golden rune.
+                III: Enter Tomb for the first time after picking up the Orb of Zot, and then get the golden rune (+25 tournament points).
               </p>
             </div>
 
@@ -488,14 +508,14 @@
               <p>
                 Jiyva thinks that it is important to be flexible and will gift
                 players who excel with at least 5 distinct
-                races and at least 5 distinct classes with a 
+                species and at least 5 distinct backgrounds with a 
                 <a name="gelatinous_body">GELATINOUS BODY</a>.
               <br>
-                I: Reach experience level 9 with at least 5 distinct races and at least 5 distinct classes.
+                I: Reach experience level 9 with at least 5 distinct species and at least 5 distinct backgrounds.
               <br>
-                II: Get a rune with at least 5 distinct races and at least 5 distinct classes.
+                II: Get a rune with at least 5 distinct species and at least 5 distinct backgrounds.
               <br>
-                III: Win with at least 5 distinct races and at least 5 distinct classes.
+                III: Win with at least 5 distinct species and at least 5 distinct backgrounds.
               </p>
             </div>
 
@@ -525,19 +545,18 @@
 
             <div>
 	      <img src="images/banner_lugonu1.png"
-                   alt="The Abyssal Tourist"
-                   title="The Abyssal Tourist"
+                   alt="The Unbeliever"
+                   title="The Unbeliever"
                    width="170" height="58"
                    >
               <p>
-                Lugonu would like to corrupt the worshippers of other gods by
-                inviting them to the Abyss. Those who prove worthy will be officially designated as <a name="abyssal_tourists">ABYSSAL TOURISTS</a>.
+                Lugonu hates all the other gods and admires <a name="unbelievers">UNBELIEVERS</a> who persevere without worshipping any god at all. Demigods cannot win Lugonu's praise for this, since they do not have a choice in the matter.
               <br>
-I: Survive the Abyss without having ever been a follower of Lugonu during that game.
+I: Reach the end of the Lair as a non-demigod without worshipping a god.
               <br>
-II: Find the abyssal rune and then escape the Abyss without ever having been a follower of Lugonu during that game.
+II: Find a rune as a non-demigod without worshipping a god.
               <br>
-III: Find the abyssal rune and then escape the Abyss before reaching experience level 16 and without ever having been a follower of Lugonu during that game.
+III: Win a game as a non-demigod without worshipping a god.
               </p>
             </div>
 
@@ -644,7 +663,7 @@ III: Reach D:27 in 27 minutes.
               <br>
                 II: Get two runes before entering D:14 (or below) in that game.
               <br>
-                III: Get four runes before entering D:14 (or below) in that game.
+                III: Get four runes before entering D:14 (or below) in that game (+25 tournament points).
               </p>
             </div>
 
@@ -665,7 +684,7 @@ III: Reach D:27 in 27 minutes.
               <br>
                 II: Steal a combo high score for a previously won combo.
               <br>
-                III: Steal a species or class high score that was previously of at least 10,000,000 points.
+                III: Steal a species or background high score that was previously of at least 10,000,000 points.
               </p>
             </div>
 
@@ -725,11 +744,11 @@ III: Reach D:27 in 27 minutes.
                 will recognise success by awarding 
                 <a name="the_harvest">THE HARVEST</a>.
               <br>
-                I: Kill 25 distinct uniques over the course of the tournament.
+                I: Kill 28 distinct uniques over the course of the tournament.
               <br>
-                II: Kill 45 distinct uniques over the course of the tournament.
+                II: Kill 48 distinct uniques over the course of the tournament.
               <br>
-                III: Kill 65 distinct uniques over the course of the tournament.
+                III: Kill 68 distinct uniques over the course of the tournament.
               </p>
             </div>
 
@@ -764,68 +783,55 @@ III: Reach D:27 in 27 minutes.
             <hr>
             <div class="fineprint">
               <p>
-                Some rules have been changed from the 0.11 tournament held in October/November 2012. This is a list of rules differences.
+                Some rules have been changed from the 0.12 tournament held in May 2013. This is a list of rules differences.
               </p>
 
               <p><span class="removed">[REMOVED]</span>
-                flags rules that existed in the 0.11 tournament and are gone in
-                this tournament</p>
+                flags rules that existed in the 0.12 tournament and are gone in
+                this tournament.</p>
 
               <p><span class="added">[NEW]</span>
-                flags rules that are new to this tournament</p>
+                flags rules that are new to this tournament.</p>
 
               <p><span class="changed">[CHANGED]</span>
                 flags rules that have been modified for this 
 		tournament. To compare
-                changed rules with the rules in the 0.11 tournament, see
-                the <a href="http://seleniac.org/crawl/tourney/12b/">old
-                rules</a>
+                changed rules with the rules in the 0.12 tournament, see
+                the <a href="http://dobrazupa.org/tournament/0.12/">old
+                rules</a>.
               </p>
             </div>
 
             <hr>
 
             <p class="added">
-              <span>50-20-10 clan points</span> for finishing a game with the
-            highest value of AC+EV. Ties are broken by who reaches that number
-            first.
+              <span>25 points</span> for each game in which you enter Tomb for the first time after picking up the Orb of Zot and then get the golden rune (<a href="#natures_ally">NATURE's ALLY</a> banner III).
+              <span class="added">[NEW]</span>
+            </p>
+
+            <p class="added">
+              <span>25 points</span> for each game in which you get four runes before entering D:14 (or below) in that game (<a href="#vow_of_courage">VOW OF COURAGE</a> banner III).
               <span class="added">[NEW]</span>
             </p>
 
             <p class="changed">
-              <span>Kikubaaqudgha</span> now only asks you to get a rune without entering Lair for the second tier of the <a href="#lord_of_darkness">LORD OF DARKNESS</a> banner. (Used to require winning a game without entering Lair and was worth 20 bonus points)
+              <span>Beogh</span> now only asks you to have the highest score in a clan that is ranked in the top 27 for the second tier of the <span><a href="#saint">SAINT</a></span> banner. (Used to require top 20.)
               <span class="changed">[CHANGED]</span>
             </p>
 
             <p class="changed">
-              <span>Lugonu</span> now only requires staying below experience level 16 for the third tier of the <a href="#abyssal_tourists">ABYSSAL TOURIST</a> banner. (Used to require staying below experience level 13.)
+              <span>Lugonu</span> has a <a href="#unbelievers">new banner</a>.
               <span class="changed">[CHANGED]</span>
             </p>
 
             <p class="changed">
-              <span>Makhleb</span> now just wants you to enter the Vestibule of Hell for the second tier of the <a href="#speed_demons">SPEED DEMON</a> banner and does not place any restrictions on species for the third tier.
+              <span><a href="#nemelex_choice">NEMELEX' CHOICE</a></span> characters are now chosen by Nemelex from those with fewer than eight online wins. (Used to be fewer than six online wins)
               <span class="changed">[CHANGED]</span>
             </p>
 
             <p class="changed">
-              <span><a href="#nemelex_choice">NEMELEX' CHOICE</a></span> characters are now chosen by Nemelex from those with fewer than six online wins.
+              <span>Yredelemnul</span> now requires three more distinct uniques to be killed to earn each tier of the <span><a href="#the_harvest">HARVEST</a></span> banner.
               <span class="changed">[CHANGED]</span>
-            </p>
-
-            <p class="changed">
-              <span>Sif Muna</span> has a <a href="#lorekeeper">completely new banner</a>. The <a href="#explorer">old banner</a> was reclaimed by Ashenzari.
-              <span class="changed">[CHANGED]</span>
-            </p>
-
-            <p class="changed">
-              <span>Vehumet</span> has a <a href="#ruthless_efficiency">completely new banner</a>.
-              <span class="changed">[CHANGED]</span>
-            </p>
-
-            <p class="removed">
-              <span>20 points</span> for a win without visiting
-	      the Lair.
-              <span class="removed">[REMOVED]</span>
             </p>
 	    
           </div>

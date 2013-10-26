@@ -12,6 +12,8 @@
 #captain by putting the captain's name in her rcfile AND the captain "drafted"
 #her by listing her as a member of the team, that she's also named.
 
+BAD_NAMERS = [] # players who have lost the privilege of getting to name
+                # their team in a given tourney
 
 import os
 import fnmatch
@@ -87,6 +89,8 @@ def get_teams(directory_list):
                 elif elements[0] == 'TEAMNAME':
                     players.append(player)
                     teamname[player] = '_'.join(elements[1:]) or ('Team_' + player)
+                    if player in BAD_NAMERS:
+                        teamname[player] = 'Team_' + player
                     volunteers.setdefault(player, []).append(player)
                     line = rcfile.readline()
                     offset = line.find('TEAM')
@@ -159,7 +163,7 @@ def clan_additional_score(c, owner):
     points = query.clan_max_points(c, owner, key)
     additional += log_temp_clan_points(c, owner, key, points)
   for g in query.clan_class_wins(c, owner):
-    key = 'class_win:' + g[0]
+    key = 'background_win:' + g[0]
     points = query.clan_max_points(c, owner, key)
     additional += log_temp_clan_points(c, owner, key, points)
   for g in query.clan_god_wins(c, owner):

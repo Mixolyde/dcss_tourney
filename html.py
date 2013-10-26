@@ -13,7 +13,7 @@ BANNER_IMAGES = \
       'fedhas': [ 'banner_fedhas.png', "Nature's Ally" ],
       'jiyva': [ 'banner_jiyva.png', 'Gelatinous Body' ],
       'kikubaaqudgha': [ 'banner_kikubaaqudgha.png', 'Lord of Darkness' ],
-      'lugonu': [ 'banner_lugonu.png', 'The Abyssal Tourist' ],
+      'lugonu': [ 'banner_lugonu.png', 'The Unbeliever' ],
       'makhleb': [ 'banner_makhleb.png', 'Speed Demon' ],
       'nemelex': [ 'banner_nemelex.png', "Nemelex' Choice" ],
       'okawaru': [ 'banner_okawaru.png', 'The Conqueror' ],
@@ -38,13 +38,13 @@ BANNER_TEXT = \
         ],
       'beogh':
         [ 'Have the highest score in your clan.',
-          'Have the highest score in a clan that is ranked in the top 20.',
+          'Have the highest score in a clan that is ranked in the top 27.',
           'Have the highest score in a clan that is ranked in the top 5.',
         ],
       'cheibriados':
         [ 'Reach experience level 9 in two consecutive games.',
           'Achieve a two-win streak.',
-          'Achieve a four-win streak with four distinct races and four distinct classes.',
+          'Achieve a four-win streak with four distinct species and four distinct backgrounds.',
         ],
       'elyvilon':
         [ 'Become the champion of any god.',
@@ -57,9 +57,9 @@ BANNER_TEXT = \
           'Enter Tomb for the first time after picking up the Orb of Zot, and then get the golden rune.',
         ],
       'jiyva':
-        [ 'Reach experience level 9 with at least 5 distinct races and at least 5 distinct classes.',
-          'Get a rune with at least 5 distinct races and at least 5 distinct classes.',
-          'Win with at least 5 distinct races and at least 5 distinct classes.',
+        [ 'Reach experience level 9 with at least 5 distinct species and at least 5 distinct backgrounds.',
+          'Get a rune with at least 5 distinct species and at least 5 distinct backgrounds.',
+          'Win with at least 5 distinct species and at least 5 distinct backgrounds.',
         ],
       'kikubaaqudgha':
         [ 'Enter the Vestibule of Hell without having entered the Lair.',
@@ -67,9 +67,9 @@ BANNER_TEXT = \
           'Win a game without having entered the Temple, the Orcish Mines, the Lair, or the Vaults.',
         ],
       'lugonu':
-        [ 'Survive the Abyss without having ever been a follower of Lugonu during that game.',
-          'Find the abyssal rune and then escape the Abyss without ever having been a follower of Lugonu during that game.',
-          'Find the abyssal rune and then escape the Abyss before reaching experience level 16 and without ever having been a follower of Lugonu during that game.',
+        [ 'Reach the end of the Lair as a non-demigod without worshipping a god.',
+          'Find a rune as a non-demigod without worshipping a god.',
+          'Win a game as a non-demigod without worshipping a god.',
         ],
       'makhleb':
         [ 'Reach D:14 in 27 minutes.',
@@ -99,7 +99,7 @@ BANNER_TEXT = \
       'trog':
         [ 'Steal a combo high score that was previously of at least 1,000 points.',
           'Steal a combo high score for a previously won combo.',
-          'Steal a species or class high score that was previously of at least 10,000,000 points.',
+          'Steal a species or background high score that was previously of at least 10,000,000 points.',
         ],
       'vehumet':
         [ "Get a rune within 27 real-world hours of starting the game.",
@@ -112,9 +112,9 @@ BANNER_TEXT = \
           'Leave a ziggurat from its lowest floor.',
         ],
       'yredelemnul':
-        [ 'Kill 25 distinct uniques over the course of the tournament.',
-          'Kill 45 distinct uniques over the course of the tournament.',
-          'Kill 65 distinct uniques over the course of the tournament.',
+        [ 'Kill 28 distinct uniques over the course of the tournament.',
+          'Kill 48 distinct uniques over the course of the tournament.',
+          'Kill 68 distinct uniques over the course of the tournament.',
         ],
       'zin':
         [ 'Enter either Pandemonium or any branch of Hell.',
@@ -149,7 +149,7 @@ STOCK_WIN_COLUMNS = \
 EXT_WIN_COLUMNS = \
     [ ('score', 'Score', True),
       ('race', 'Species'),
-      ('class', 'Class'),
+      ('class', 'Background'),
       ('god', 'God'),
       ('title', 'Title'),
       ('xl', 'XL'),
@@ -175,7 +175,7 @@ STOCK_COLUMNS = \
 EXT_COLUMNS = \
     [ ('score', 'Score', True),
       ('race', 'Species'),
-      ('class', 'Class'),
+      ('class', 'Background'),
       ('god', 'God'),
       ('title', 'Title'),
       ('place', 'Place'),
@@ -189,7 +189,7 @@ EXT_COLUMNS = \
 
 WHERE_COLUMNS = \
     [ ('race', 'Species'),
-      ('cls', 'Class'),
+      ('cls', 'Background'),
       ('god', 'God'),
       ('title', 'Title'),
       ('place', 'Place'),
@@ -537,9 +537,7 @@ def clan_affiliation(c, player, include_clan=True):
   return clan_html
 
 def make_milestone_string(w, src, make_links=False):
-  if src == 'cdt':
-    pretty_src = 'tcdo'
-  elif src == 'csz':
+  if src == 'csz':
     pretty_src = 'cszo'
   else:
     pretty_src = src
@@ -560,7 +558,7 @@ def make_milestone_string(w, src, make_links=False):
 def whereis(c, *players):
   where_data = []
   for p in players:
-    for src in ['cao','cdo','cdt','csz']:
+    for src in ['cao','cdo','cln','csz','rhf']:
       where = query.whereis_player(c, p, src)
       if not where:
         continue
@@ -578,9 +576,7 @@ def whereis_table(c):
   where_data = []
   for w in query.whereis_all_players(c):
     where = w[1]
-    if w[0] == 'cdt':
-      pretty_src = 'tcdo'
-    elif w[0] == 'csz':
+    if w[0] == 'csz':
       pretty_src = 'cszo'
     else:
       pretty_src = w[0]
@@ -594,8 +590,8 @@ def whereis_table(c):
     mile_data = [where[1], where[7], where[3], '%s%s' % (where[4], god_phrase), where[2], where[6], '%s ago' % ago, pretty_src.upper(), new]
     where_data.append([where[7], where[3], where[0], mile_data])
   where_data.sort(key=lambda e: (e[0],e[1],e[2]), reverse=True)
-  if len(where_data) > 100:
-    where_data = where_data[:100]
+  if len(where_data) > 150:
+    where_data = where_data[:150]
   where_list = []
   for w in where_data:
     where_list.append(w[3])

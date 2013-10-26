@@ -15,45 +15,55 @@ import sys
 from test_data import USE_TEST, TEST_YEAR, TEST_VERSION, TEST_START_TIME, TEST_END_TIME, TEST_HARE_START_TIME, TEST_LOGS, TEST_MILESTONES, TEST_CLAN_DEADLINE
 
 T_YEAR = TEST_YEAR or '2013'
-T_VERSION = TEST_VERSION or '0.12'
+T_VERSION = TEST_VERSION or '0.13'
 
 # Start and end of the tournament, UTC.
-START_TIME = TEST_START_TIME or (T_YEAR + '0511')
-END_TIME   = TEST_END_TIME or (T_YEAR + '0527')
+START_TIME = TEST_START_TIME or (T_YEAR + '10112000')
+END_TIME   = TEST_END_TIME or (T_YEAR + '10272000')
 
 # Deadline for forming teams.
 CLAN_DEADLINE = (TEST_CLAN_DEADLINE or
-                datetime.datetime(2013, 5, 19, 0)) # May 19, 00:00
+                datetime.datetime(2013, 10, 19, 20)) # Oct 19, 20:00
 
-DATE_FORMAT = '%Y%m%d'
+DATE_FORMAT = '%Y%m%d%H%M'
 
 GAME_VERSION = T_VERSION
 
-HARE_START_TIME = TEST_HARE_START_TIME or (T_YEAR + '0526')
+HARE_START_TIME = TEST_HARE_START_TIME or (T_YEAR + '10262000')
 
 CDO = 'http://crawl.develz.org/'
 CAO = 'http://crawl.akrasiac.org/'
 CSZO = 'http://dobrazupa.org/'
+CLN = 'http://crawl.lantea.net/crawl/'
+RHF = 'http://rl.heh.fi/'
 
 # Log and milestone files. A tuple indicates a remote file with t[1]
 # being the URL to wget -c from.
 
 LOGS = TEST_LOGS or [
-         ('cao-logfile-0.12', CAO + 'logfile12'),
-         ('cdo-logfile-0.12', CDO + 'allgames-0.12.txt'),
-         ('cszo-logfile-0.12', CSZO + 'meta/0.12/logfile')]
+         ('cao-logfile-0.13', CAO + 'logfile13'),
+         ('cdo-logfile-0.13', CDO + 'allgames-0.13.txt'),
+         ('cln-logfile-0.13', CLN + 'meta/0.13/logfile'),
+#         ('rhf-logfile-0.13', RHF + 'meta/crawl-0.13/logfile'),
+         ('cszo-logfile-0.13', CSZO + 'meta/0.13/logfile')]
+# this line should be used on CSZO instead:
+#         'cszo-logfile-0.13']
 
 MILESTONES = TEST_MILESTONES or [
-         ('cao-milestones-0.12', CAO + 'milestones12'),
-         ('cdo-milestones-0.12', CDO + 'milestones-0.12.txt'),
-         ('cszo-milestones-0.12', CSZO + 'meta/0.12/milestones')]
+         ('cao-milestones-0.13', CAO + 'milestones13'),
+         ('cdo-milestones-0.13', CDO + 'milestones-0.13.txt'),
+         ('cln-milestones-0.13', CLN + 'meta/0.13/milestones'),
+#         ('rhf-milestones-0.13', RHF + 'meta/crawl-0.13/milestones'),
+         ('cszo-milestones-0.13', CSZO + 'meta/0.13/milestones')]
+# this line should be used on CSZO instead:
+#         'cszo-milestones-0.13']
 
 BLACKLIST_FILE = 'blacklist.txt'
 EXTENSION_FILE = 'modules.ext'
 TOURNAMENT_DB = 'tournament'
 COMMIT_INTERVAL = 3000
 # These rcfiles need to be updated from the servers every few hours.
-CRAWLRC_DIRECTORY_LIST = ['rcfiles-cszo/','rcfiles-cao/','rcfiles-cdo/']
+CRAWLRC_DIRECTORY_LIST = ['rcfiles-cszo/','rcfiles-cao/','rcfiles-cdo/','rcfiles-cln','rcfiles-rhf']
 
 LISTENERS = [ ]
 TIMERS = [ ]
@@ -261,6 +271,9 @@ class Xlogfile:
       except:
         sys.stderr.write("Error processing line: " + line + "\n")
         raise
+
+      if xdict['char'][:2] in ['Dj','LO','SE'] or xdict['char'][2:] in ['Pr']:
+        continue
 
       xline = Xlogline( self, self.filename, line_offset,
                         xdict.get('end') or xdict.get('time'),
@@ -859,9 +872,9 @@ def insert_xlog_db(cursor, xdict, filename, offset):
 def update_whereis(c, xdict, filename):
   player = xdict['name']
   src = filename[:3]
-  # CDO tiles and console are separate.
-  if src == 'cdo' and xdict['tiles'] == '1':
-    src = 'cdt'
+  # CDO tiles and console are separate. But CDO no longer has tiles.
+  #if src == 'cdo' and xdict['tiles'] == '1':
+  #  src = 'cdt'
   start_time = xdict['start']
   mile_time = xdict['time']
   query_do(c, '''INSERT INTO whereis_table
@@ -872,9 +885,9 @@ def update_whereis(c, xdict, filename):
 def update_last_game(c, xdict, filename):
   player = xdict['name']
   src = filename[:3]
-  # CDO tiles and console are separate.
-  if src == 'cdo' and xdict['tiles'] == '1':
-    src = 'cdt'
+  # CDO tiles and console are separate. But CDO no longer has tiles.
+  #if src == 'cdo' and xdict['tiles'] == '1':
+  #  src = 'cdt'
   start_time = xdict['start']
   query_do(c, '''INSERT INTO last_game_table
                       VALUES (%s, %s, %s)

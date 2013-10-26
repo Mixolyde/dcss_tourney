@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#DIR=/chroot/var/games/crawl09/saves
+DIR=/var/www/meta/0.13
 
-#ln -s $DIR/logfile cao-logfile-0.9
-#ln -s $DIR/milestones cao-milestones-0.9
+ln -s $DIR/logfile cszo-logfile-0.13
+ln -s $DIR/milestones cszo-milestones-0.13
+ln -s /var/www/rcfiles/crawl-0.13 rcfiles-cszo

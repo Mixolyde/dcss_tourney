@@ -10,12 +10,12 @@ UPDATE_INTERVAL = 7 * 60
 # Are we testing locally, or do we want output suitable for a website?
 # Test whether our username is the same that is used on the server.
 LOCAL_TEST = ('tourney' != os.environ.get('USER'))
-WEB_BASE = 'http://dobrazupa.org/tournament/0.12'
+WEB_BASE = 'http://dobrazupa.org/tournament/0.13'
 
 LOCK = None
 BASEDIR = LOCAL_TEST and os.environ['HOME'] or '/home/tourney/dcss_tourney'
 LOCKFILE = BASEDIR + '/tourney-py.lock'
-SCORE_FILE_DIR = 'html.tourney0.12'
+SCORE_FILE_DIR = 'html.tourney0.13'
 
 SCORE_CSS = 'tourney-score.css'
 SCORE_CSS_PATH = SCORE_FILE_DIR + "/" + SCORE_CSS
@@ -25,10 +25,11 @@ PLAYER_FILE_DIR = SCORE_FILE_DIR + '/' + PLAYER_BASE
 CLAN_FILE_DIR = SCORE_FILE_DIR + '/' + CLAN_BASE
 
 CAO_MORGUE_BASE = 'http://crawl.akrasiac.org/rawdata'
-CDO_MORGUE_BASE = 'http://crawl.develz.org/morgues/0.12'
+CDO_MORGUE_BASE = 'http://crawl.develz.org/morgues/0.13'
+CLN_MORGUE_BASE = 'http://crawl.lantea.net/crawl/morgue'
 CSZO_MORGUE_BASE = 'http://dobrazupa.org/morgue'
+RHF_MORGUE_BASE = 'http://rl.heh.fi/morgue'
 
-# These aren't actually CAO any longer, so let's XXX that out.
 XXX_TOURNEY_BASE = ((LOCAL_TEST and ('file:///' + os.getcwd() + '/' + SCORE_FILE_DIR))
                    or WEB_BASE)
 XXX_IMAGE_BASE = XXX_TOURNEY_BASE + '/images'
@@ -165,8 +166,12 @@ def morgue_link(xdict):
     base = CAO_MORGUE_BASE
   elif src.find('cdo') >= 0:
     base = CDO_MORGUE_BASE
-  else:
+  elif src.find('cln') >= 0:
+    base = CLN_MORGUE_BASE
+  elif src.find('csz') >= 0:
     base = CSZO_MORGUE_BASE
+  else:
+    base = RHF_MORGUE_BASE
   return "%s/%s/morgue-%s-%s.txt" % (base, name, name, stime)
 
 def linked_text(key, link_fn, text=None):
